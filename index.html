@@ -46,7 +46,7 @@
             border-bottom: 3px solid #f39c12; 
         }
 
-        /* التحكم في إظهار وإخفاء الأقسام */
+        /* التحكم في إظهار وإخفاء الأقسام الرئيسية */
         .page-content {
             display: none; 
             width: 100%;
@@ -71,24 +71,20 @@
         }
         
         /* ------------------- 1. أنماط الواجهة الرئيسية ------------------- */
-        .ksu-logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        .importance-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            text-align: justify;
-        }
-        
+        .ksu-logo { width: 150px; height: auto; margin-bottom: 20px; }
+        .importance-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px; text-align: justify; }
+
         /* ------------------- 2. أنماط اختبار كلمة السر ------------------- */
-        .test-section {
+        /* ✅ هذا هو التصحيح الجذري للمشكلة */
+        .password-test-area {
+            /* يتم إخفاء هذا الغلاف بشكل افتراضي في كل الصفحات */
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center; 
+            width: 100%;
         }
+
         .test-section input {
             width: 80%;
             padding: 12px;
@@ -111,24 +107,11 @@
         .bar { height: 100%; width: 0%; transition: width 0.4s ease, background-color 0.4s ease; }
         .very-weak { background: #e74c3c; } .weak { background: #f39c12; }
         .good { background: #2ecc71; } .strong { background: #1abc9c; }
-        .strength-text {
-            font-weight: bold;
-            color: #555;
-            min-height: 20px;
-        }
+        .strength-text { font-weight: bold; color: #555; min-height: 20px; }
 
         /* ------------------- 3. أنماط تواصل معنا ------------------- */
-        .contact-info p {
-            font-size: 1.1rem;
-            margin: 15px 0;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .contact-info a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .contact-info p { font-size: 1.1rem; margin: 15px 0; padding: 10px; border-bottom: 1px solid #eee; }
+        .contact-info a { color: #007bff; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body onload="switchTab('home')">
@@ -154,7 +137,7 @@
     </div>
 
     <div id="test" class="page-content test-section">
-        <div class="test-section-wrapper">
+        <div class="password-test-area">
             <h2>🔐 اختبار قوة كلمة المرور المُحسن</h2>
             <input type="password" id="password" placeholder="اكتب كلمة المرور هنا..." dir="auto" /> 
             
@@ -198,6 +181,7 @@
             });
         });
 
+        // ------------------- كود اختبار قوة كلمة المرور -------------------
         const passwordInput = document.getElementById("password");
         const bar = document.getElementById("bar");
         const text = document.getElementById("strength-text");
