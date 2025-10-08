@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>اختبار لأمن كلمات المرور</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         /* ------------------- الأنماط العامة والملاحة ------------------- */
@@ -74,10 +75,8 @@
         .ksu-logo { width: 150px; height: auto; margin-bottom: 20px; }
         .importance-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px; text-align: justify; }
 
-        /* ------------------- 2. أنماط اختبار كلمة السر ------------------- */
-        /* ✅ هذا هو التصحيح الجذري للمشكلة */
+        /* ------------------- 2. أنماط اختبار كلمة السر (الجديدة) ------------------- */
         .password-test-area {
-            /* يتم إخفاء هذا الغلاف بشكل افتراضي في كل الصفحات */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -85,16 +84,41 @@
             width: 100%;
         }
 
-        .test-section input {
+        /* ------------------- تنسيقات حقل كلمة المرور والزر ------------------- */
+        .password-field-container {
+            position: relative; /* مهم لاحتواء الزر */
             width: 80%;
-            padding: 12px;
-            font-size: 16px;
+            max-width: 400px;
             margin-bottom: 15px;
+        }
+
+        .password-field-container input {
+            width: 100%; /* اجعل الإدخال يملأ الحاوية */
+            padding: 12px 40px 12px 12px; /* مسافة داخلية لترك مكان للزر */
+            font-size: 16px;
             border: 2px solid #eee;
             border-radius: 8px;
             text-align: right;
-            max-width: 400px; 
+            box-sizing: border-box; /* للتأكد من أن البادينغ لا يزيد من العرض الكلي */
         }
+        
+        /* تنسيق زر إظهار/إخفاء كلمة المرور */
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            left: 10px; /* وضعه على اليسار (مع الأخذ في الاعتبار أن الاتجاه RTL) */
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #004d40;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: #007bff;
+        }
+        /* ------------------- نهاية تنسيقات حقل كلمة المرور والزر ------------------- */
+
         .strength-bar {
             height: 10px;
             border-radius: 8px;
@@ -139,8 +163,11 @@
     <div id="test" class="page-content test-section">
         <div class="password-test-area">
             <h2>🔐 اختبار قوة كلمة المرور المُحسن</h2>
-            <input type="password" id="password" placeholder="اكتب كلمة المرور هنا..." dir="auto" /> 
             
+            <div class="password-field-container">
+                <input type="password" id="password" placeholder="اكتب كلمة المرور هنا..." dir="auto" /> 
+                <i class="fa-solid fa-eye toggle-password" id="toggle-icon" onclick="togglePasswordVisibility()"></i>
+            </div>
             <div class="strength-bar"><div class="bar" id="bar"></div></div>
             <div class="strength-text" id="strength-text">اكتب كلمة المرور لبدء الفحص</div>
         </div>
@@ -159,10 +186,9 @@
             <p>
                 **الإيميل الثالث:** <a href="mailto:email3@example.com">email3@example.com</a>
             </p>
-            </P>
-                **الإيميل الرابع:** <a href="mailto:email3@example.com">email3@example.com</a>
-            </P>
-            
+            <p>
+                **الإيميل الرابع:** <a href="mailto:email4@example.com">email4@example.com</a>
+            </p>
         </div>
     </div>
 
@@ -184,6 +210,24 @@
                 switchTab(button.getAttribute('data-section'));
             });
         });
+
+        // ------------------- دالة إظهار / إخفاء كلمة المرور الجديدة -------------------
+        function togglePasswordVisibility() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('toggle-icon');
+
+            if (input.type === 'password') {
+                input.type = 'text'; // إظهار النص
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash'); // تغيير الأيقونة إلى عين مغلقة
+            } else {
+                input.type = 'password'; // إخفاء النص
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye'); // تغيير الأيقونة إلى عين مفتوحة
+            }
+        }
+        // ------------------- نهاية دالة إظهار / إخفاء كلمة المرور الجديدة -------------------
+
 
         // ------------------- كود اختبار قوة كلمة المرور -------------------
         const passwordInput = document.getElementById("password");
@@ -223,10 +267,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
