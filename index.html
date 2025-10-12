@@ -133,9 +133,46 @@
         .good { background: #2ecc71; } .strong { background: #1abc9c; }
         .strength-text { font-weight: bold; color: #555; min-height: 20px; }
 
-        /* ------------------- 3. أنماط تواصل معنا ------------------- */
-        .contact-info p { font-size: 1.1rem; margin: 15px 0; padding: 10px; border-bottom: 1px solid #eee; }
-        .contact-info a { color: #007bff; text-decoration: none; font-weight: bold; }
+        /* ------------------- 3. أنماط تواصل معنا (تم التعديل لترتيب الإيميلات) ------------------- */
+        .contact-info {
+            /* لتوسيط المحتوى داخل الحاوية */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* لتوسيط الأسطر أفقياً */
+            width: 100%; 
+        }
+        .contact-info p { 
+            font-size: 1.1rem; 
+            margin: 10px 0; /* تم تقليل المسافة قليلاً */
+            padding: 12px 15px; /* زيادة التباعد الداخلي للظهور بشكل أوضح */
+            border-bottom: 1px solid #eee;
+            /* تحديد عرض ثابت لجميع الفقرات (الإيميلات) للتوحيد */
+            width: 90%; 
+            max-width: 550px; 
+            text-align: right; 
+            box-sizing: border-box;
+            background-color: #f9f9f9; /* إضافة لون خلفية خفيف للتمييز */
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        .contact-info p:hover {
+            background-color: #e8f5ff; /* تأثير عند مرور المؤشر */
+        }
+        .contact-info p:last-of-type { 
+            border-bottom: none; /* إزالة الخط من آخر عنصر */
+            margin-bottom: 0;
+        }
+        .contact-info p:first-child { 
+            text-align: center; 
+            background-color: transparent;
+            border-bottom: 1px solid #ccc;
+        }
+        .contact-info a { 
+            color: #007bff; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+        /* ------------------- نهاية أنماط تواصل معنا ------------------- */
     </style>
 </head>
 <body onload="switchTab('home')">
@@ -189,7 +226,7 @@
             <p>
                 **الإيميل الرابع:** <a href="mailto:445911456@student.ksu.edu.sa">445911456@student.ksu.edu.sa</a>
             </p>
-            </p> 
+            <p>
                 **الإيميل الخامس:** <a href="mailto:444911176@student.ksu.edu.sa">444911176@student.ksu.edu.sa</a>
             </p>
         </div>
@@ -204,8 +241,12 @@
                 button.classList.remove('active');
             });
 
-            document.getElementById(sectionId).classList.add('active');
-            document.querySelector(`.tab-button[data-section="${sectionId}"]`).classList.add('active');
+            // التأكد من أن القسم المطلوب موجود قبل محاولة إظهاره
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                document.querySelector(`.tab-button[data-section="${sectionId}"]`).classList.add('active');
+            }
         }
 
         document.querySelectorAll('.tab-button').forEach(button => {
@@ -270,8 +311,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
